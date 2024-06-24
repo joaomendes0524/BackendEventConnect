@@ -12,9 +12,15 @@ const divulgadorSchema = new Schema({
     username: {
         type: String,
         required: true,
+<<<<<<< HEAD
         trim: true
     },
 
+=======
+        trim: true,
+        unique: true
+    },
+>>>>>>> 5b850e7d94029eafa581d5283490de51039d7153
     email: {
         type: String,
         required: true,

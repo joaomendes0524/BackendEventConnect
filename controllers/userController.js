@@ -2,7 +2,11 @@ const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+<<<<<<< HEAD
 const secret = process.env.SECRET
+=======
+const secret = 'sua-chave-secreta'; // Use uma chave secreta segura e armazene-a em variáveis de ambiente
+>>>>>>> 5b850e7d94029eafa581d5283490de51039d7153
 
 // Registrar um novo User
 const registerUser = async (req, res) => {
@@ -37,7 +41,11 @@ const loginUser = async (req, res) => {
         }
 
         const token = jwt.sign({ userId: user._id }, secret, { expiresIn: '1h' });
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 5b850e7d94029eafa581d5283490de51039d7153
         res.json({ message: 'Login bem-sucedido', token });
     } catch (err) {
         res.status(500).json({ message: err.message });
