@@ -2,11 +2,7 @@ const Divulgador = require('../models/divulgadorModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-<<<<<<< HEAD
 const secret = process.env.SECRET
-=======
-const secret = 'sua-chave-secreta'; // Use uma chave secreta segura e armazene-a em variáveis de ambiente
->>>>>>> 5b850e7d94029eafa581d5283490de51039d7153
 
 // Registrar um novo Divulgador
 const registerDivulgador = async (req, res) => {

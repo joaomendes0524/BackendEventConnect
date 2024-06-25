@@ -5,16 +5,10 @@ const Divulgador = require('../models/divulgadorModel');
 // Criar um novo evento
 const createEvent = async (req, res) => {
     const { title, description, date } = req.body;
-<<<<<<< HEAD
     const imagePath = req.file ? req.file.path : null; // Caminho da imagem
 
     try {
         const divulgador = await Divulgador.findById(req.userId);
-=======
-
-    try {
-        const divulgador = await Divulgador.findById(req.user.id);
->>>>>>> 5b850e7d94029eafa581d5283490de51039d7153
         if (!divulgador) {
             return res.status(403).json({ message: 'Apenas divulgadores podem criar eventos' });
         }
@@ -23,12 +17,7 @@ const createEvent = async (req, res) => {
             title,
             description,
             date,
-<<<<<<< HEAD
-            image: imagePath, // Adiciona o caminho da imagem ao evento
-            createdBy: req.userId
-=======
             createdBy: req.user.id
->>>>>>> 5b850e7d94029eafa581d5283490de51039d7153
         });
 
         await event.save();
