@@ -39,17 +39,6 @@ app.use('/events', eventRoutes);
 const commentRoutes = require('./routes/comment');
 app.use('/comment', commentRoutes);
 
-// Importando o middleware de upload
-const { upload, uploadToFirebase } = require('./middleware/upload');
-
-// Rota para upload de arquivos
-app.post('/upload', upload.single('file'), uploadToFirebase, (req, res) => {
-    if (req.file && req.file.firebaseUrl) {
-        res.json({ message: 'Upload bem-sucedido', url: req.file.firebaseUrl });
-    } else {
-        res.status(400).json({ message: 'Nenhum arquivo enviado' });
-    }
-});
 
 //servidor web
 app.listen(3000, ()=>{

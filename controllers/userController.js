@@ -43,6 +43,8 @@ const loginUser = async (req, res) => {
     }
 };
 
+
+
 // Listar todos os Users (apenas para demonstração, pode ser removido ou protegido)
 const getAllUsers = async (req, res) => {
     try {

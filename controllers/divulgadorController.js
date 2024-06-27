@@ -14,7 +14,7 @@ const registerDivulgador = async (req, res) => {
         res.status(201).json(divulgador);
     } catch (err) {
         res.status(400).json({ message: err.message });
-    }
+    }   
 };
 
 // Autenticar um Divulgador

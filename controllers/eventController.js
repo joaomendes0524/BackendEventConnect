@@ -1,70 +1,43 @@
+// Criar um novo evento
 const Event = require('../models/eventModel');
 const Divulgador = require('../models/divulgadorModel');
-const bucket = require('../config/firebaseConfig');
-const { v4: uuidv4 } = require('uuid');
 
 // Criar um novo evento
 const createEvent = async (req, res) => {
-  const { title, description, date } = req.body;
+    const { title, description, date } = req.body;
+    const imagePath = req.file ? req.file.path : null; // Caminho da imagem
 
-  try {
-    const divulgador = await Divulgador.findById(req.userId);
-    if (!divulgador) {
-      return res.status(403).json({ message: 'Apenas divulgadores podem criar eventos' });
-    }
-
-    let imageUrl = null;
-    if (req.file) {
-      const blob = bucket.file(`images/${uuidv4()}_${req.file.originalname}`);
-      const blobStream = blob.createWriteStream({
-        metadata: {
-          contentType: req.file.mimetype
+    try {
+        const divulgador = await Divulgador.findById(req.userId);
+        if (!divulgador) {
+            return res.status(403).json({ message: 'Apenas divulgadores podem criar eventos' });
         }
-      });
 
-      blobStream.on('error', (err) => {
-        console.error('Erro no upload da imagem:', err);
-        res.status(500).json({ message: 'Erro no upload da imagem' });
-      });
-
-      blobStream.on('finish', async () => {
-        imageUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
         const event = new Event({
-          title,
-          description,
-          date,
-          createdBy: req.userId,
-          image: imageUrl
+            title,
+            description,
+            date,
+            image: imagePath, // Adiciona o caminho da imagem ao evento
+            createdBy: req.userId
         });
+
         await event.save();
         res.status(201).json(event);
-      });
-
-      blobStream.end(req.file.buffer);
-    } else {
-      const event = new Event({
-        title,
-        description,
-        date,
-        createdBy: req.userId
-      });
-      await event.save();
-      res.status(201).json(event);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
     }
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
 };
+
 
 // Listar todos os eventos
-const getAllEvents = async (req, res) => {
-  try {
-    const events = await Event.find().populate('createdBy', 'name username');
-    res.json(events);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+  const getAllEvents = async (req, res) => {
+    try {
+      const events = await Event.find().populate('createdBy', 'name username');
+      res.json(events);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };
 
 // Atualizar um evento
 const updateEvent = async (req, res) => {
