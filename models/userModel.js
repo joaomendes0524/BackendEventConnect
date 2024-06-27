@@ -22,8 +22,11 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    } 
-})
+    },
+    profile: {
+         type: mongoose.Schema.Types.ObjectId, ref: 'Profile'
+    }
+});
 
 //Método para hashear a senha antes de salvar o usuário
 userSchema.pre('save', async function(next) {

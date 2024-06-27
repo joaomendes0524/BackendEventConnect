@@ -32,7 +32,10 @@ const divulgadorSchema = new Schema({
     cnpj: {
         type: String,
         trim: true
-    }
+    },
+    profile: {
+         type: mongoose.Schema.Types.ObjectId, ref: 'Profile' 
+        }
 });
 
 // Validar que pelo menos um dos campos cpf ou cnpj está preenchido
